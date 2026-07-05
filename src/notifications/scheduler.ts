@@ -61,12 +61,12 @@ export async function setupAttendanceCategory(): Promise<void> {
     {
       identifier: "went",
       buttonTitle: "✅ Went",
-      options: { opensAppToForeground: false },
+      options: { opensAppToForeground: true },
     },
     {
       identifier: "skipped",
       buttonTitle: "❌ Skipped",
-      options: { opensAppToForeground: false },
+      options: { opensAppToForeground: true },
     },
   ]);
 }

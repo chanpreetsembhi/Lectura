@@ -34,7 +34,7 @@ export default function App() {
   const [lectures, setLectures] = useState<Lecture[]>([]);
   const [ready, setReady] = useState(false);
 
-  const colorScheme = useColorScheme()
+  const colorScheme = useColorScheme();
 
   const navigationRef =
     useRef<NavigationContainerRef<ReactNavigation.RootParamList>>(null);
@@ -78,7 +78,9 @@ export default function App() {
   }, [loadLectures]);
 
   // ---------------------------------------------------------------------------
-  // Notification listeners
+  // Notification listeners (data refresh only — the actual full-screen-alert
+  // and cold-start-response handling lives inside useDueLectureWatcher, so
+  // there's exactly one place responsible for opening/resolving the alert)
   // ---------------------------------------------------------------------------
 
   useEffect(() => {
@@ -128,31 +130,11 @@ export default function App() {
           console.log("[AppState] App came to foreground, reloading lectures");
           await loadLectures();
         }
-      }
+      },
     );
 
     return () => subscription.remove();
   }, [loadLectures]);
-
-  // ---------------------------------------------------------------------------
-  // Check if app was opened from a notification (killed state)
-  // ---------------------------------------------------------------------------
-
-  useEffect(() => {
-    (async () => {
-      const lastResponse =
-        await Notifications.getLastNotificationResponseAsync();
-
-      if (lastResponse) {
-        const data = lastResponse.notification.request.content.data;
-        console.log(
-          "[Notif] App opened from killed state via notification:",
-          data
-        );
-        await loadLectures();
-      }
-    })();
-  }, []);
 
   // ---------------------------------------------------------------------------
   // FullScreenAlert handlers

@@ -5,6 +5,7 @@ const KEYS = {
   LECTURES: '@lecture_alarm/lectures',
   ATTENDANCE: '@lecture_alarm/attendance',
   SETTINGS: '@lecture_alarm/settings',
+  PENDING_ALERT: '@lecture_alarm/pending_alert',
 };
 
 // ---------- Lectures ----------
